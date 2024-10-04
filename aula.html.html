@@ -1,0 +1,216 @@
+<html><head><base href="https://cdn.jsdelivr.net/"><link rel="stylesheet" href="npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"><script src="npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script><style>
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 5px;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    .interactive-section {
+      background-color: #e8f4f8;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 20px 0;
+    }
+    .btn-primary {
+      background-color: #3498db;
+      border-color: #3498db;
+    }
+    .btn-primary:hover {
+      background-color: #2980b9;
+      border-color: #2980b9;
+    }
+    .progress {
+      height: 25px;
+    }
+    .progress-bar {
+      background-color: #2ecc71;
+    }
+    #timer {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #e74c3c;
+    }
+  </style></head><body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Micro:bit: Explorando Possibilidades na Educação</h1>
+  
+    <div class="progress mb-4">
+      <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+    </div>
+  
+    <div class="text-end mb-3">
+      Tempo restante: <span id="timer">60:00</span>
+    </div>
+  
+    <section>
+      <h2>1. Introdução ao Micro:bit (10 minutos)</h2>
+      <p>O Micro:bit é um pequeno computador programável desenvolvido pela BBC para incentivar crianças a aprenderem programação e eletrônica. Lançado em 2015, o dispositivo foi projetado para ser acessível e fácil de usar, tornando-o uma ferramenta ideal para a educação.</p>
+      
+      <div class="interactive-section">
+        <h3>Atividade Interativa: Conheça o Micro:bit</h3>
+        <p>Clique nos diferentes componentes do Micro:bit para saber mais sobre cada um:</p>
+        <div id="microbit-interactive" class="text-center">
+          <svg width="300" height="400" viewBox="0 0 300 400">
+            <rect x="10" y="10" width="280" height="380" rx="20" fill="#f1c40f" />
+            <circle id="led-matrix" cx="150" cy="100" r="60" fill="#e74c3c" />
+            <rect id="button-a" x="50" y="200" width="40" height="40" rx="5" fill="#3498db" />
+            <rect id="button-b" x="210" y="200" width="40" height="40" rx="5" fill="#3498db" />
+            <rect id="edge-connector" x="75" y="350" width="150" height="20" fill="#95a5a6" />
+          </svg>
+        </div>
+        <div id="component-info" class="mt-3"></div>
+      </div>
+    </section>
+  
+    <section>
+      <h2>2. Programação em Blocos com MakeCode (20 minutos)</h2>
+      <p>O MakeCode é uma plataforma de programação visual que permite criar programas para o Micro:bit usando blocos. É uma maneira intuitiva e acessível de introduzir conceitos de programação para alunos de todas as idades.</p>
+      
+      <div class="interactive-section">
+        <h3>Atividade Interativa: Simulador MakeCode</h3>
+        <p>Experimente criar um programa simples usando nosso simulador MakeCode:</p>
+        <div id="makecode-simulator" class="border p-3">
+          <div class="row">
+            <div class="col-md-6">
+              <div id="blocks-area" class="border p-2" style="min-height: 200px;">
+                Arraste os blocos aqui
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div id="microbit-simulator" class="border p-2" style="min-height: 200px;">
+                Simulador Micro:bit
+              </div>
+            </div>
+          </div>
+          <div class="mt-3">
+            <button id="run-code" class="btn btn-primary">Executar Código</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section>
+      <h2>3. Atividade Prática Sugerida (25 minutos)</h2>
+      <p>Vamos criar um "Medidor de Humor" usando o Micro:bit. Este projeto utiliza os botões e a matriz LED para permitir que os alunos expressem seu humor de forma interativa.</p>
+      
+      <div class="interactive-section">
+        <h3>Passos para o "Medidor de Humor":</h3>
+        <ol>
+          <li>Use o botão A para mostrar um rosto feliz na matriz LED.</li>
+          <li>Use o botão B para mostrar um rosto triste.</li>
+          <li>Ao pressionar ambos os botões, mostre um rosto neutro.</li>
+        </ol>
+        <p>Tente implementar isso no simulador MakeCode acima!</p>
+      </div>
+    </section>
+  
+    <section>
+      <h2>4. Discussão e Encerramento (5 minutos)</h2>
+      <p>Vamos refletir sobre como o Micro:bit pode ser integrado em diferentes disciplinas e faixas etárias. Compartilhe suas ideias no chat!</p>
+      
+      <div class="interactive-section">
+        <h3>Reflexão Final</h3>
+        <textarea class="form-control" rows="3" placeholder="Digite aqui suas reflexões sobre como usar o Micro:bit em sua sala de aula..."></textarea>
+        <button class="btn btn-primary mt-2">Enviar Reflexão</button>
+      </div>
+    </section>
+  </div>
+  
+  <script>
+    // Timer functionality
+    let timeLeft = 3600; // 60 minutes in seconds
+    const timerElement = document.getElementById('timer');
+    const progressBar = document.querySelector('.progress-bar');
+  
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      const progress = ((3600 - timeLeft) / 3600) * 100;
+      progressBar.style.width = `${progress}%`;
+      progressBar.setAttribute('aria-valuenow', progress);
+      progressBar.textContent = `${Math.round(progress)}%`;
+  
+      if (timeLeft > 0) {
+        timeLeft--;
+        setTimeout(updateTimer, 1000);
+      }
+    }
+  
+    updateTimer();
+  
+    // Micro:bit interactive
+    const componentInfo = document.getElementById('component-info');
+    const components = {
+      'led-matrix': 'Matriz LED 5x5 para exibir padrões, texto e números.',
+      'button-a': 'Botão A: Um dos dois botões programáveis.',
+      'button-b': 'Botão B: O outro botão programável.',
+      'edge-connector': 'Conector de borda: Para conectar acessórios externos.'
+    };
+  
+    document.querySelectorAll('#microbit-interactive > svg > *').forEach(element => {
+      element.addEventListener('click', function() {
+        const info = components[this.id];
+        if (info) {
+          componentInfo.textContent = info;
+        }
+      });
+    });
+  
+    // Simplified MakeCode simulator
+    const blocksArea = document.getElementById('blocks-area');
+    const microbitSimulator = document.getElementById('microbit-simulator');
+    const runCodeBtn = document.getElementById('run-code');
+  
+    let draggedBlock = null;
+  
+    function createDraggableBlock(text) {
+      const block = document.createElement('div');
+      block.className = 'bg-primary text-white p-2 mb-2 draggable';
+      block.draggable = true;
+      block.textContent = text;
+      block.addEventListener('dragstart', e => {
+        draggedBlock = e.target;
+      });
+      return block;
+    }
+  
+    const blocks = [
+      'Mostrar LED',
+      'Ao pressionar botão A',
+      'Ao pressionar botão B',
+      'Mostrar ícone'
+    ];
+  
+    blocks.forEach(block => {
+      blocksArea.appendChild(createDraggableBlock(block));
+    });
+  
+    blocksArea.addEventListener('dragover', e => {
+      e.preventDefault();
+    });
+  
+    blocksArea.addEventListener('drop', e => {
+      e.preventDefault();
+      if (draggedBlock) {
+        e.target.appendChild(draggedBlock);
+      }
+    });
+  
+    runCodeBtn.addEventListener('click', () => {
+      const code = Array.from(blocksArea.children).map(block => block.textContent).join('\n');
+      microbitSimulator.textContent = 'Código em execução:\n' + code;
+    });
+  </script></body></html>
